@@ -1,28 +1,36 @@
 FROM granatumx/gbox-py-sdk:1.0.0
 
-COPY ./install_from_CRAN.R .
+RUN apt-get install -y gnupg
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+RUN echo "deb http://cloud.r-project.org/bin/linux/ubuntu focal-cran40/" >> /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get install -y r-base-core r-base r-base-dev r-recommended
+RUN apt-get install -y libcurl4-gnutls-dev libcurl4-gnutls-dev libssl-dev
 
-RUN Rscript ./install_from_CRAN.R BiocManager
-RUN Rscript ./install_from_CRAN.R RCurl
-RUN Rscript ./install_from_CRAN.R XML
-RUN Rscript ./install_from_CRAN.R survival
-RUN Rscript ./install_from_CRAN.R samr
-RUN Rscript ./install_from_CRAN.R combinat
-RUN Rscript ./install_from_CRAN.R remotes
+RUN R -e 'install.packages("BiocManager")'
+RUN R -e 'install.packages("remotes")'
 
-COPY ./install_from_bioconductor.R .
+RUN R -e 'install.packages(c("RCurl", "XML", "survival", "samr", "combinat"))'
 
-RUN Rscript ./install_from_bioconductor.R impute
-RUN Rscript ./install_from_bioconductor.R limma
-RUN Rscript ./install_from_bioconductor.R edgeR
-RUN Rscript ./install_from_bioconductor.R SummarizedExperiment
-RUN Rscript ./install_from_bioconductor.R genefilter
-RUN Rscript ./install_from_bioconductor.R geneplotter
-RUN Rscript ./install_from_bioconductor.R DESeq2
-RUN Rscript ./install_from_bioconductor.R Biobase
+RUN R -e 'install.packages("devtools")'
 
-COPY ./install_from_github.R .
-RUN Rscript ./install_from_github.R metaOmics/MetaDE
+RUN R -e 'devtools::install_version("flexmix", version = "2.3-13", repos = "http://cran.us.r-project.org")'
+
+RUN R -e 'install.packages(c("jsonlite"))'
+RUN R -e 'BiocManager::install(c("impute"))'
+RUN R -e 'BiocManager::install(c("limma"))'
+RUN R -e 'BiocManager::install(c("edgeR"))'
+RUN R -e 'BiocManager::install(c("SummarizedExperiment"))'
+RUN R -e 'BiocManager::install(c("genefilter"))'
+RUN R -e 'BiocManager::install(c("geneplotter"))'
+RUN R -e 'BiocManager::install(c("Biobase"))'
+# RUN R -e 'BiocManager::install(c("DESeq2"))'
+RUN apt-get install -y git
+# RUN R -e 'remotes::install_bioc(c("DESeq2"))'
+RUN apt-get install -y libcairo2-dev libxt-dev
+RUN R -e 'BiocManager::install("scde")'
+RUN R -e 'remotes::install_bioc("DESeq2")'
+RUN R -e 'remotes::install_github("metaOmics/MetaDE")'
 
 COPY . .
 

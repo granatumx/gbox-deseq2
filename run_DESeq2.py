@@ -10,10 +10,18 @@ def parse(st):
 def main():
     gn = Granatum()
     assay_df = gn.pandas_from_assay(gn.get_import('assay'))
+    grdict = gn.get_import('groupVec')
     phe_dict = pd.Series(gn.get_import('groupVec'))
-    groups = parse(gn.get_arg('groups'))
+    groups = set(parse(gn.get_arg('groups')))
 
-    assay_df = assay_df.iloc[:, groups]
+    inv_map = {}
+    for k, v in grdict.items():
+        if v in groups:
+            inv_map[v] = inv_map.get(v, []) + [k]
+    celllist = []
+    for k, v in inv_map.items():
+        celllist = celllist.append(v)
+    assay_df = assay_df.iloc[:, celllist]
     assay_df = assay_df.sparse.to_dense().fillna(0)
     #assay_mat = r['as.matrix'](pandas2ri.py2ri(assay_df))
     # assay_mat = r['as.matrix'](conversion.py2rpy(assay_df))

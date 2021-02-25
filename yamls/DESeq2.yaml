@@ -27,7 +27,7 @@ frontend:
         Group vector (e.g, [1,1,1,2,2,2,...]) indicating the sample groups in
         the matrix
   args:
-    - kind: text
+    - type: text
       injectInto: groups
       label: Two or more groups to compare (for example... cluster 1, cluster 2), leave blank for all comparison
       default: ''

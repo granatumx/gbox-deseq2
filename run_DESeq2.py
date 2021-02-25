@@ -11,11 +11,11 @@ def main():
     phe_dict = pd.Series(gn.get_import('groupVec'))
 
     #assay_mat = r['as.matrix'](pandas2ri.py2ri(assay_df))
-    assay_mat = r['as.matrix'](conversion.py2rpy(assay_df))
+    # assay_mat = r['as.matrix'](conversion.py2rpy(assay_df))
     phe_vec = phe_dict[assay_df.columns]
 
     r.source('./drive_DESeq2.R')
-    ret_r = r['run_DESeq'](assay_mat, phe_vec)
+    ret_r = r['run_DESeq'](assay_df, phe_vec)
     ret_r_as_df = r['as.data.frame'](ret_r)
 
     # ret_py_df = pandas2ri.ri2py(ret_r_as_df)

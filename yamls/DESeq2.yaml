@@ -18,7 +18,7 @@ endpoints:
 frontend:
   imports:
     - kind: assay
-      label: Assay including matrix and geneIds
+      label: Assay including matrix and geneIds, must have integer values such as the original counts matrix
       injectInto: assay
     - kind: sampleMeta
       label: Group vector

@@ -7,7 +7,7 @@ pandas2ri.activate()
 
 def main():
     gn = Granatum()
-    assay_df = gn.pandas_from_assay(gn.get_import('assay')).to_dense()
+    assay_df = gn.pandas_from_assay(gn.get_import('assay')).sparse.to_dense()
     phe_dict = pd.Series(gn.get_import('groupVec'))
 
     #assay_mat = r['as.matrix'](pandas2ri.py2ri(assay_df))

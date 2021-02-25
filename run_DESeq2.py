@@ -21,7 +21,7 @@ def main():
     cells = []
     for k, v in inv_map.items():
         cells.append(v)
-    assay_df = assay_df.iloc[:, cells]
+    assay_df = assay_df.loc[:, cells]
     assay_df = assay_df.sparse.to_dense().fillna(0)
     #assay_mat = r['as.matrix'](pandas2ri.py2ri(assay_df))
     # assay_mat = r['as.matrix'](conversion.py2rpy(assay_df))

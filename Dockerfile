@@ -34,7 +34,7 @@ RUN R -e 'remotes::install_github("metaOmics/MetaDE")'
 
 RUN pip install --upgrade pandas
 RUN pip install rpy2
-RUN R -e 'install.packages("BiocParallel")'
+RUN R -e 'BiocManager::install("BiocParallel")'
 
 COPY . .
 

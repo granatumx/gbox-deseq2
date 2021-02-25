@@ -8,7 +8,7 @@ register(MulticoreParam(14))
 run_DESeq <- function(rw, phe) {
   se <- SummarizedExperiment(SimpleList(counts=as.matrix(rw)), colData=DataFrame(phe=phe))
   dds <- DESeqDataSet(se, ~ phe)
-  dds <- DESeq(dds)
+  dds <- DESeq(dds, parallel=TRUE)
   res <- results(dds)
   print(res)
   return(res)

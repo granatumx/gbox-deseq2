@@ -4,12 +4,17 @@ from rpy2.robjects import r, IntVector, StrVector, DataFrame, Matrix, conversion
 
 pandas2ri.activate()
 
+def parse(st):
+    return list(map(lambda s: s.strip(), list(filter(lambda s: s != "", st.split(',')))))
 
 def main():
     gn = Granatum()
-    assay_df = gn.pandas_from_assay(gn.get_import('assay')).sparse.to_dense().fillna(0)
+    assay_df = gn.pandas_from_assay(gn.get_import('assay'))
     phe_dict = pd.Series(gn.get_import('groupVec'))
+    groups = parse(gn.get_arg('groups'))
 
+    assay_df = assay_df.iloc[:, groups]
+    assay_df = assay_df.sparse.to_dense().fillna(0)
     #assay_mat = r['as.matrix'](pandas2ri.py2ri(assay_df))
     # assay_mat = r['as.matrix'](conversion.py2rpy(assay_df))
     phe_vec = phe_dict[assay_df.columns]

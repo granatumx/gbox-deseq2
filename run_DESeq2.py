@@ -18,9 +18,9 @@ def main():
     ret_r = r['run_DESeq'](assay_mat, phe_vec)
     ret_r_as_df = r['as.data.frame'](ret_r)
 
-    ret_py_df = pandas2ri.ri2py(ret_r_as_df)
+    # ret_py_df = pandas2ri.ri2py(ret_r_as_df)
     # TODO: maybe rename the columns to be more self-explanatory?
-    result_df = ret_py_df
+    result_df = ret_r_as_df
     result_df = result_df.sort_values('padj')
     result_df.index.name = 'gene'
     gn.add_pandas_df(result_df.reset_index(), description='The result table as returned by DESeq2.')

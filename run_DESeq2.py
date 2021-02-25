@@ -20,7 +20,7 @@ def main():
             inv_map[v] = inv_map.get(v, []) + [k]
     cells = []
     for k, v in inv_map.items():
-        cells.append(v)
+        cells.extend(v)
     assay_df = assay_df.loc[:, cells]
     assay_df = assay_df.sparse.to_dense().fillna(0)
     #assay_mat = r['as.matrix'](pandas2ri.py2ri(assay_df))

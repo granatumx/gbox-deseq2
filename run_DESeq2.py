@@ -18,10 +18,10 @@ def main():
     for k, v in grdict.items():
         if v in groups:
             inv_map[v] = inv_map.get(v, []) + [k]
-    celllist = []
+    cells = []
     for k, v in inv_map.items():
-        celllist = celllist.append(v)
-    assay_df = assay_df.iloc[:, celllist]
+        cells.append(v)
+    assay_df = assay_df.iloc[:, cells]
     assay_df = assay_df.sparse.to_dense().fillna(0)
     #assay_mat = r['as.matrix'](pandas2ri.py2ri(assay_df))
     # assay_mat = r['as.matrix'](conversion.py2rpy(assay_df))

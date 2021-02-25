@@ -1,6 +1,7 @@
 library(DESeq2)
 library(Biobase)
-library(MulticoreParam(14))
+library("BiocParallel")
+register(MulticoreParam(14))
 
 ## rw: the expression matrix
 ## phe: the phenotype (grouping) vector

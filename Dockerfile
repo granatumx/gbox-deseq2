@@ -32,6 +32,7 @@ RUN R -e 'BiocManager::install("scde")'
 RUN R -e 'remotes::install_bioc("DESeq2")'
 RUN R -e 'remotes::install_github("metaOmics/MetaDE")'
 
+RUN pip install --upgrade pandas
 RUN pip install rpy2
 
 COPY . .
